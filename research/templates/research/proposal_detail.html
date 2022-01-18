@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'user-proposals' object.author.username %}">{{ object.author }}</a>
+        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        {% if object.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'proposal-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'proposal-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">Title: {{ object.title }}</h2>
+      <p class="article-content">Business model: {{ object.business_model }}</p>
+      <p class="article-content">HR, Parners: {{ object.hr_partner }}</p>
+      <p class="article-content">Technology: {{ object.technology }}</p>
+      <p class="article-content">Ecosystem: {{ object.partner_user_ecosystem }}</p>
+      <p class="article-content">Community: {{ object.community }}</p>
+      <p class="article-content">Roadmap: {{ object.roadmap }}</p>
+      <p class="article-content">Competitor: {{ object.competitor }}</p>
+      <p class="article-content">MarketCap: {{ object.marketcap }}</p>
+      <p class="article-content">Tokenomics: {{ object.tokenomics }}</p>
+      <p class="article-content">FOMO: {{ object.fomo }}</p>
+
+      <p class="article-content">Content: {{ object.content|safe }}</p>
+
+
+      <div class="article-metadata-bottom"  style="padding-top:1px;margin-top: 4px;border-top: 1px solid #e3e3e3;" >
+        <b>All keywords:</b> {% for keyword in proposal.keywords.all %}
+          <a href="{% url 'keyword-detail' keyword.id %}">{{ keyword.name }},</a>
+        {% endfor %}
+      </div>
+    </div>
+  </article>
+{% endblock content %}

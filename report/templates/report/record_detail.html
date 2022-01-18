@@ -1,0 +1,37 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'user-records' object.author.username %}">{{ object.author }}</a>
+        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        {% if object.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'record-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'record-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">Niches: {{ object.niches }}</h2>
+      <p class="article-content">Project: {{ object.project }}</p>
+      <p class="article-content">Token: {{ object.token }}</p>
+      <p class="article-content">Ecosystem: {{ object.ecosystem }}</p>
+      <p class="article-content">Launch: {{ object.launch }}</p>
+      <p class="article-content">Category: {{ object.categpory }}</p>
+      <p class="article-content">Website: {{ object.website }}</p>
+      <p class="article-content">Twitter: {{ object.twitter }}</p>
+      <p class="article-content">Overview: {{ object.overview }}</p>
+      <p class="article-content">Comment: {{ object.comment }}</p>
+      <p class="article-content">Rate: {{ object.rate }}</p>
+
+      <p class="article-content">{{ object.content|safe }}</p>
+            
+      <div class="article-metadata-bottom"  style="padding-top:1px;margin-top: 4px;border-top: 1px solid #e3e3e3;" >
+        <b>All keywords:</b> {% for keyword in record.keywords.all %}
+          <a href="{% url 'keyword-detail' keyword.id %}">{{ keyword.name }},</a>
+        {% endfor %}
+      </div>
+      
+    </div>
+  </article>
+{% endblock content %}
